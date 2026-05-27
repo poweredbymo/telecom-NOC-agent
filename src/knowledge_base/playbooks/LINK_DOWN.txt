@@ -1,0 +1,41 @@
+PLAYBOOK: LINK_DOWN
+Alarm Type: LINK_DOWN
+Severity: CRITICAL
+Affected Node Types: eNodeB, OLT, Microwave
+
+DESCRIPTION
+A LINK_DOWN alarm indicates complete loss of a transport or access link between
+network elements. This is one of the most critical alarms in telecom operations
+as it results in immediate service loss for all users served by the affected node.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Verify alarm is genuine — check if node responds to SNMP ping
+2. Check for planned maintenance windows in the NOC ticketing system
+3. Assess scope — identify all downstream nodes and services affected
+4. Declare a P1 incident if more than 1000 users are affected
+5. Notify on-call field engineer if remote recovery is not possible
+
+INVESTIGATION STEPS
+1. Check physical layer — fiber cuts, connector issues, power at remote end
+2. Review recent configuration changes on the node
+3. Check upstream node status — is the parent node also in alarm?
+4. Review interface counters for errors prior to the link going down
+5. Check weather and environmental conditions for outdoor links
+
+RECOVERY ACTIONS
+1. Attempt remote interface reset via NMS
+2. If Microwave: check alignment, RSL levels, and modem status
+3. If Fiber: initiate OTDR test, dispatch field team if cut confirmed
+4. If eNodeB: attempt remote restart of affected board/card
+5. Monitor for 15 minutes after recovery to confirm stability
+
+ESCALATION
+- 0-15 min: NOC Level 1 attempts remote recovery
+- 15-30 min: Escalate to NOC Level 2 and notify field team
+- 30+ min: Escalate to vendor TAC and senior NOC manager
+
+ROOT CAUSE PATTERNS
+- Simultaneous LINK_DOWN on multiple nodes = likely upstream failure
+- LINK_DOWN after POWER_FAILURE = power-related transport issue
+- LINK_DOWN with HIGH_BER preceding = physical layer degradation
+- Single node LINK_DOWN = likely local hardware or fiber issue

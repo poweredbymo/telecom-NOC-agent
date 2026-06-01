@@ -16,7 +16,7 @@ IMMEDIATE ACTIONS (0-5 minutes)
 5. Notify on-call field engineer if remote recovery is not possible
 
 INVESTIGATION STEPS
-1. Check physical layer — fiber cuts, connector issues, power at remote end
+1. Check physical layer (fiber cuts, connector issues, power at remote end)
 2. Review recent configuration changes on the node
 3. Check upstream node status — is the parent node also in alarm?
 4. Review interface counters for errors prior to the link going down

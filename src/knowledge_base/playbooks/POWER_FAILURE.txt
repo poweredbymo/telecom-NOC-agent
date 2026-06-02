@@ -1,0 +1,42 @@
+PLAYBOOK: POWER_FAILURE
+Alarm Type: POWER_FAILURE
+Severity: CRITICAL
+Affected Node Types: eNodeB, Microwave, OLT
+
+DESCRIPTION
+POWER_FAILURE indicates loss of primary power supply to a network element.
+The node is now running on battery backup (UPS). Battery runtime is typically
+2-8 hours depending on site configuration. If power is not restored within
+the battery window the node will go offline causing a LINK_DOWN cascade.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Confirm alarm — check if node is still reachable via management plane
+2. Check battery status and estimated runtime remaining
+3. Identify cause — utility outage, generator failure, PDU fault
+4. Check if other nodes at same site are also affected
+5. Dispatch field team immediately — this is time-critical
+
+INVESTIGATION STEPS
+1. Contact utility provider — check for area-wide power outage
+2. Check generator status if site has backup generator
+3. Check PDU and rectifier alarms in site monitoring system
+4. Review battery health history — old batteries have shorter runtime
+5. Check environmental alarms — high temperature may indicate HVAC failure
+
+RECOVERY ACTIONS
+1. Dispatch field team with portable generator if outage > 2 hours expected
+2. Contact utility provider for estimated restoration time
+3. If generator site: attempt remote start of generator
+4. Prioritise most critical nodes for manual power restoration
+5. Pre-stage LINK_DOWN recovery procedures
+
+ESCALATION
+- Immediate escalation to Level 2 and field operations manager
+- If battery runtime < 1 hour: escalate to senior management
+- Coordinate with utility provider for priority restoration
+
+ROOT CAUSE PATTERNS
+- Multiple sites simultaneously = area utility outage
+- Single site = local PDU, rectifier or utility feed issue
+- POWER_FAILURE followed by LINK_DOWN = battery exhausted
+- Recurring POWER_FAILURE at same site = aging infrastructure

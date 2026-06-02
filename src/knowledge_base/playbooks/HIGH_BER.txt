@@ -1,0 +1,40 @@
+PLAYBOOK: HIGH_BER
+Alarm Type: HIGH_BER
+Severity: MAJOR
+Affected Node Types: eNodeB, Microwave
+
+DESCRIPTION
+HIGH_BER (Bit Error Rate) indicates signal quality degradation on a radio or
+microwave link. BER above 1e-6 causes noticeable packet loss; above 1e-3
+typically leads to link failure. Early detection allows preventive action
+before complete link failure.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Note current BER value and trend — is it worsening?
+2. Check if adjacent nodes on same path show degradation
+3. Check weather radar if outdoor microwave link is involved
+4. Assess current traffic impact — packet loss percentage
+
+INVESTIGATION STEPS
+1. Check RSL (Received Signal Level) — compare to baseline
+2. Review interference scan results if available
+3. Check antenna alignment — look for recent physical disturbance reports
+4. Review temperature — thermal expansion can cause misalignment
+5. Check for nearby construction or new structures causing obstruction
+
+RECOVERY ACTIONS
+1. If RSL has dropped: dispatch for antenna realignment check
+2. If interference detected: coordinate frequency change with RF team
+3. If temperature related: check pressurization of waveguide
+4. Reduce modulation order temporarily to improve link resilience
+5. Increase transmit power if link budget allows
+
+ESCALATION
+- Monitor for 30 minutes — if BER worsening escalate to Level 2
+- If BER exceeds 1e-3: treat as pre-failure, initiate LINK_DOWN procedure
+
+ROOT CAUSE PATTERNS
+- HIGH_BER on Microwave during rain/wind = weather-related fading
+- HIGH_BER on multiple hops simultaneously = interference event
+- Gradual BER increase over days = antenna misalignment or waveguide issue
+- Sudden BER spike = external interference or physical obstruction

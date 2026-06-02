@@ -1,0 +1,39 @@
+PLAYBOOK: PACKET_LOSS
+Alarm Type: PACKET_LOSS
+Severity: MAJOR
+Affected Node Types: eNodeB, OLT, MME
+
+DESCRIPTION
+PACKET_LOSS alarms indicate that a percentage of network traffic is being
+dropped. Loss above 1% causes noticeable degradation for voice and video
+services. Loss above 5% causes session drops and user complaints.
+Loss above 20% renders the service unusable.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Note packet loss percentage — determine severity of user impact
+2. Check if LINK_DOWN or HIGH_BER alarms are co-existing
+3. Identify affected services — voice, data, video
+4. Check if loss is unidirectional or bidirectional
+
+INVESTIGATION STEPS
+1. Check interface error counters — input/output errors, drops
+2. Review queue utilization — is the node congested?
+3. Check CPU and memory — high resource usage causes drops
+4. Review QoS policy — are high-priority queues also affected?
+5. Trace path to identify which hop is introducing the loss
+
+RECOVERY ACTIONS
+1. If congestion: review traffic engineering, activate overflow paths
+2. If hardware errors: identify faulty interface card, initiate replacement
+3. If QoS misconfiguration: roll back recent policy changes
+4. If upstream issue: escalate to upstream provider NOC
+
+ESCALATION
+- Loss > 5% for more than 10 minutes: escalate to Level 2
+- Loss > 20%: declare P1 incident, escalate immediately
+
+ROOT CAUSE PATTERNS
+- PACKET_LOSS following HIGH_BER = radio layer causing drops
+- PACKET_LOSS with HIGH_CPU = processing bottleneck
+- PACKET_LOSS with HIGH_LATENCY = congestion or buffer bloat
+- PACKET_LOSS on single interface = hardware fault likely

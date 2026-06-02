@@ -1,0 +1,40 @@
+PLAYBOOK: HIGH_CPU
+Alarm Type: HIGH_CPU
+Severity: MINOR (can escalate to MAJOR)
+Affected Node Types: MME, SGW, OLT
+
+DESCRIPTION
+HIGH_CPU indicates that a network element's processor is operating above safe
+thresholds. Sustained HIGH_CPU (above 85%) causes call setup failures, dropped
+sessions, and delayed alarm processing. Above 95% the node may become
+unresponsive.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Check current CPU percentage and trend
+2. Identify which process is consuming CPU via NMS
+3. Check if this coincides with traffic peak hours
+4. Check for active software upgrade or database sync
+
+INVESTIGATION STEPS
+1. Review process table — identify top CPU consumers
+2. Check active call/session count vs node capacity
+3. Review recent software or configuration changes
+4. Check for routing protocol storms or signaling floods
+5. Review logs for crash-restart loops
+
+RECOVERY ACTIONS
+1. If traffic overload: activate load balancing, redirect traffic
+2. If runaway process: isolate and restart affected process
+3. If signaling storm: apply rate limiting at ingress
+4. If software bug: initiate emergency rollback procedure
+5. Pre-emptively prepare standby node for failover
+
+ESCALATION
+- CPU > 90% sustained for 5 minutes: escalate to Level 2
+- CPU > 95%: prepare for failover, notify senior engineer
+
+ROOT CAUSE PATTERNS
+- HIGH_CPU on MME during busy hour = capacity planning issue
+- HIGH_CPU following software upgrade = software regression
+- Sudden HIGH_CPU spike = signaling storm or routing loop
+- HIGH_CPU with HIGH_LATENCY = processing bottleneck causing queuing

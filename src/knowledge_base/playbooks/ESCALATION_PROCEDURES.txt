@@ -1,0 +1,55 @@
+PLAYBOOK: ESCALATION PROCEDURES
+Topic: NOC escalation matrix and severity definitions
+
+PRIORITY DEFINITIONS
+
+P1 — Critical (immediate response required)
+- More than 5000 users affected
+- Core network element failure
+- Multiple sites simultaneously affected
+- Response time: immediate, resolution target 2 hours
+
+P2 — High (response within 15 minutes)
+- 1000-5000 users affected
+- Single site or access node failure
+- Service degradation but not complete outage
+- Response time: 15 minutes, resolution target 4 hours
+
+P3 — Medium (response within 1 hour)
+- Less than 1000 users affected
+- Partial service degradation
+- Non-critical node affected
+- Response time: 1 hour, resolution target 8 hours
+
+P4 — Low (response within 4 hours)
+- Minimal user impact
+- Warning threshold breached
+- Preventive action required
+- Response time: 4 hours, resolution target next business day
+
+ESCALATION MATRIX
+
+Level 1 — NOC Operator
+- Handles P3 and P4 incidents
+- Attempts remote recovery using playbooks
+- Escalates to Level 2 if no resolution within defined time
+
+Level 2 — NOC Senior Engineer
+- Handles P1 and P2 incidents
+- Coordinates field dispatch
+- Engages vendor TAC if needed
+- Escalates to Level 3 if no resolution within 1 hour
+
+Level 3 — NOC Manager + Vendor TAC
+- Major outage management
+- Coordinates across multiple teams
+- Customer communication for SLA breaches
+- Engages emergency change process if needed
+
+AGENT RECOMMENDATIONS FRAMEWORK
+When recommending actions, the agent should:
+1. Assign priority based on affected_users and severity
+2. State the recommended escalation level clearly
+3. List immediate actions first, investigation second
+4. Always include a human approval step before any network change
+5. Flag if the incident matches a known cascade pattern

@@ -1,0 +1,40 @@
+PLAYBOOK: INTERFACE_FLAPPING
+Alarm Type: INTERFACE_FLAPPING
+Severity: MAJOR
+Affected Node Types: eNodeB, OLT, Microwave
+
+DESCRIPTION
+INTERFACE_FLAPPING indicates an interface is repeatedly cycling between up
+and down states. This is highly disruptive as each state change triggers
+routing protocol reconvergence, causes traffic interruptions, and generates
+large volumes of secondary alarms masking the root cause.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Count flap frequency — flaps per minute indicates severity
+2. Identify if routing protocols are destabilised by the flapping
+3. Consider dampening the interface to reduce secondary alarm noise
+4. Check if traffic is being rerouted successfully to backup paths
+
+INVESTIGATION STEPS
+1. Check physical layer — cable, SFP, connector integrity
+2. Review interface error counters — CRC errors, input errors
+3. Check far-end device — is the peer also seeing flaps?
+4. Review power levels on optical interfaces — check SFP receive power
+5. Check for duplex mismatch or autonegotiation issues
+
+RECOVERY ACTIONS
+1. Apply interface dampening to stabilise routing
+2. Replace suspect SFP or cable
+3. Force interface speed/duplex if autonegotiation is suspect
+4. If optical: check fiber cleanliness, bend radius, connector seating
+5. If persists: replace interface card
+
+ESCALATION
+- Flapping affecting routing stability: escalate to Level 2 immediately
+- More than 10 flaps per minute: treat as hardware failure
+
+ROOT CAUSE PATTERNS
+- INTERFACE_FLAPPING with HIGH_BER = physical layer degradation
+- INTERFACE_FLAPPING on multiple ports same card = card hardware fault
+- INTERFACE_FLAPPING after physical work = disturbed connector or fiber
+- Intermittent flapping at regular intervals = environmental (temperature)

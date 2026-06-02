@@ -1,0 +1,45 @@
+PLAYBOOK: CASCADING FAILURES
+Topic: Multi-alarm incident correlation and root cause identification
+
+DESCRIPTION
+Cascading failures occur when a single root cause generates multiple secondary
+alarms across dependent nodes. Identifying the root cause in an alarm storm
+is one of the most critical NOC skills. This playbook guides the agent through
+systematic root cause analysis for cascading incidents.
+
+IDENTIFYING CASCADING FAILURES
+1. Look for alarms sharing the same incident_id — these are correlated
+2. Sort alarms by timestamp — the earliest alarm is often the root cause
+3. Check topology — which failed node has the most downstream dependents?
+4. A CRITICAL alarm followed by MAJOR alarms on dependent nodes = cascade
+
+COMMON CASCADE PATTERNS
+
+Pattern 1: Power Cascade
+- POWER_FAILURE on site → LINK_DOWN on node → PACKET_LOSS on downstream
+- Root cause: power infrastructure failure
+- Action: restore power first, transport will recover automatically
+
+Pattern 2: Transport Cascade
+- LINK_DOWN on backhaul → PACKET_LOSS on access nodes → HIGH_LATENCY on core
+- Root cause: backhaul transport failure
+- Action: restore backhaul link, access nodes recover automatically
+
+Pattern 3: Core Congestion Cascade
+- HIGH_CPU on MME → HIGH_LATENCY → PACKET_LOSS across multiple nodes
+- Root cause: core node overload
+- Action: reduce load on MME, activate overflow, consider failover
+
+Pattern 4: Sync Cascade
+- SYNC_LOSS on grandmaster → SYNC_LOSS on dependent nodes → cell interference
+- Root cause: timing infrastructure failure
+- Action: restore sync source, monitor cells for interference
+
+AGENT REASONING GUIDANCE
+When presented with multiple alarms from the same incident:
+1. Group by incident_id
+2. Find the earliest timestamp alarm in the group
+3. Check if that node has downstream dependents in the topology
+4. If yes: that is the likely root cause
+5. Recommend fixing the root cause node first before downstream nodes
+6. Noise alarms (NOISE- prefix) should be deprioritised

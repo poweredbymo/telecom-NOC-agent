@@ -1,0 +1,41 @@
+PLAYBOOK: SYNC_LOSS
+Alarm Type: SYNC_LOSS
+Severity: CRITICAL
+Affected Node Types: eNodeB, Microwave
+
+DESCRIPTION
+SYNC_LOSS indicates the network element has lost its timing synchronization
+reference. LTE networks require precise timing (within 1.5 microseconds) for
+proper operation. Loss of sync causes interference between cells, call drops,
+and in severe cases the node will self-mute to avoid network interference.
+
+IMMEDIATE ACTIONS (0-5 minutes)
+1. Identify sync source being used — GPS, PTP, BITS, or SyncE
+2. Check if GPS receiver is operational and has satellite lock
+3. Check if sync loss is isolated or affecting multiple nodes
+4. Monitor — node has typically 24-72 hours holdover before self-muting
+
+INVESTIGATION STEPS
+1. Check GPS antenna status — cable, connector, obstruction
+2. Review PTP grandmaster status if using IEEE 1588
+3. Check for GPS jamming or spoofing events in the area
+4. Review sync chain — identify where the reference is lost
+5. Check timing logs for gradual drift before loss event
+
+RECOVERY ACTIONS
+1. If GPS issue: check antenna, replace if damaged
+2. If PTP issue: restore grandmaster, check network path quality
+3. Switch to backup sync source if available
+4. If no sync source: coordinate with vendor for holdover extension
+5. Monitor frequency error — take node out of service if drift excessive
+
+ESCALATION
+- Immediate escalation to transmission team
+- If multiple nodes affected: escalate to senior engineer
+- Coordinate with GPS/timing vendor if GPS infrastructure issue
+
+ROOT CAUSE PATTERNS
+- SYNC_LOSS on multiple nodes = GPS infrastructure failure
+- SYNC_LOSS on single node = local GPS receiver or antenna issue
+- SYNC_LOSS after transport change = PTP path disrupted
+- Gradual drift before loss = aging oscillator in holdover

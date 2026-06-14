@@ -71,3 +71,9 @@ def identify_root_cause(incident_alarms):
     # Get all alarm types in this incident
     alarm_types_in_incident = set(a.get("alarm_type") for a in sorted_alarms)
 
+    # Check if earliest alarm explains the rest via cascade patterns
+    earliest_type = earliest.get("alarm_type")
+    cascade = CASCADE_PATTERNS.get(earliest_type, {})
+    secondaries = set(cascade.get("likely_secondaries", []))
+    unexplained = alarm_types_in_incident - {earliest_type} - secondaries
+
